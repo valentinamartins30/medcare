@@ -85,3 +85,42 @@ ORDER BY
 
 INSERT INTO pacientes(id, nome, email, cpf, data_nascimento) VALUES
 (4, 'Carlos Silva', 'carlao@gmail.com', '90876534528', '10022008')
+
+insert INTO consultas(id, medico_id, paciente_id, status, data_hora) VALUES
+(5, 3, 4, 'realizada',  CURRENT_TIMESTAMP)
+
+SELECT 
+    c.id AS id_consulta,
+    c.data_hora,
+    m.nome AS nome_medico,
+    e.nome AS especialidade,
+    c.status
+FROM 
+    consultas c
+JOIN 
+    pacientes p ON c.paciente_id = p.id
+JOIN 
+    medicos m ON c.medico_id = m.id
+JOIN 
+    especilidades e ON m.especialidade_id = e.id
+WHERE 
+    p.nome = 'Carlos Silva';
+
+    SELECT 
+    c.id AS id_consulta,
+    p.nome AS nome_paciente,
+    m.nome AS nome_medico,
+    (m.valor_consulta + SUM(e.valor_exame)) AS valor_total
+FROM 
+    consultas c
+JOIN 
+    pacientes p ON c.paciente_id = p.id
+JOIN 
+    medicos m ON c.medico_id = m.id
+JOIN 
+    exames_consulta e ON e.consulta_id = c.id
+GROUP BY 
+    c.id, p.nome, m.nome, m.valor_consulta;
+
+INSERT INTO especilidades(id, nome) VALUES
+(4, 'Urologista')
