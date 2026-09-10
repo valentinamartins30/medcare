@@ -124,3 +124,26 @@ GROUP BY
 
 INSERT INTO especilidades(id, nome) VALUES
 (4, 'Urologista')
+insert INTO medicos(id, nome, crm, valor_consulta) VALUES
+(5, 'Lucca', '999888', 490.50)
+
+SELECT nome, valor_consulta
+FROM medicos
+WHERE valor_consulta > 300.00;
+
+
+SELECT 
+    e.nome AS especialidade,
+    SUM(m.valor_consulta) AS total_faturado
+FROM 
+    consultas c
+JOIN 
+    medicos m ON c.medico_id = m.id
+JOIN 
+    especilidades e ON m.especialidade_id = e.id
+WHERE 
+    c.status = 'realizada'
+GROUP BY 
+    e.id, e.nome
+ORDER BY 
+    total_faturado DESC;
