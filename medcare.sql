@@ -147,3 +147,10 @@ GROUP BY
     e.id, e.nome
 ORDER BY 
     total_faturado DESC;
+
+UPDATE medicos 
+SET especialidade_id = 4
+WHERE id = 4;
+
+DELETE FROM medicos 
+WHERE id = 5;
